@@ -41,40 +41,37 @@ tr.completed td {
   text-decoration: line-through;
 }
 
+/* Responsividade adicional para a tabela */
+/* Garante que a tabela ocupe 100% da largura disponível */
+table {
+  width: 100%;
+}
+
 /* --- ESTILOS DE IMPRESSÃO --- */
 @media print {
-  /* Esconde elementos desnecessários na impressão */
   .no-print,
   .no-print * {
     display: none !important;
   }
-
   body {
     background-color: white;
     padding: 0;
   }
-
-  /* Remove scrollbars e permite que a tabela flua */
   .overflow-y-auto,
   .overflow-x-auto {
     overflow: visible !important;
     max-height: none !important;
   }
-
-  /* Estilização limpa para a tabela */
   table {
     border-collapse: collapse;
     width: 100%;
   }
-
   th,
   td {
     border: 1px solid #ddd;
     padding: 4px 8px;
-    font-size: 12px; /* Fonte menor para caber em uma folha */
+    font-size: 12px;
   }
-
-  /* Força cores de fundo para impressão (navegadores webkit) */
   tr.completed {
     background-color: #f0fdf4 !important;
     -webkit-print-color-adjust: exact;

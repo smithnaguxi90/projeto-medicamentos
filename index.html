@@ -12,22 +12,26 @@
       rel="stylesheet"
     />
 
-    <!-- Favicon (Link correto para o arquivo SVG externo) -->
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 
     <!-- Arquivo de Estilo CSS Local -->
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body class="p-4 md:p-8">
+  <body class="p-3 md:p-8">
     <div
-      class="max-w-5xl mx-auto bg-white p-6 md:p-8 rounded-2xl shadow-lg print:shadow-none print:p-0"
+      class="max-w-5xl mx-auto bg-white p-4 md:p-8 rounded-xl md:rounded-2xl shadow-lg print:shadow-none print:p-0"
     >
-      <div class="flex justify-between items-center mb-4">
-        <h1 class="text-3xl font-bold text-gray-800">Plano de Medicação</h1>
-        <!-- Botão de Impressão (Oculto na impressão) -->
+      <div
+        class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-2 md:gap-0"
+      >
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-800">
+          Plano de Medicação
+        </h1>
+        <!-- Botão de Impressão -->
         <button
           id="printButton"
-          class="no-print text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-2 transition-colors"
+          class="no-print text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-2 transition-colors text-sm md:text-base"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -47,97 +51,108 @@
         </button>
       </div>
 
-      <p class="text-gray-600 mb-6 print:text-sm">
+      <p class="text-gray-600 mb-6 text-sm md:text-base print:text-sm">
         Plano de tratamento de 2 meses (60 dias) para Carbamazepina e Frisium.
       </p>
 
       <!-- Resumo dos Medicamentos -->
-      <div class="grid md:grid-cols-2 gap-4 mb-6 print:grid-cols-2 print:gap-2">
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 mb-6 print:grid-cols-2 print:gap-2"
+      >
         <div
-          class="bg-indigo-50 border border-indigo-200 p-5 rounded-xl print:border-gray-300 print:bg-white"
+          class="bg-indigo-50 border border-indigo-200 p-4 md:p-5 rounded-xl print:border-gray-300 print:bg-white"
         >
-          <h2 class="text-xl font-semibold text-indigo-800 print:text-black">
+          <h2
+            class="text-lg md:text-xl font-semibold text-indigo-800 print:text-black"
+          >
             Carbamazepina 400mg
           </h2>
-          <p class="text-indigo-700 mt-1 print:text-black">
+          <p class="text-indigo-700 mt-1 text-sm md:text-base print:text-black">
             <strong>Dosagem:</strong> 3 comprimidos por dia
           </p>
-          <p class="text-lg font-bold text-indigo-900 mt-3 print:text-black">
+          <p
+            class="text-base md:text-lg font-bold text-indigo-900 mt-2 md:mt-3 print:text-black"
+          >
             Total: 180 comprimidos
           </p>
         </div>
         <div
-          class="bg-teal-50 border border-teal-200 p-5 rounded-xl print:border-gray-300 print:bg-white"
+          class="bg-teal-50 border border-teal-200 p-4 md:p-5 rounded-xl print:border-gray-300 print:bg-white"
         >
-          <h2 class="text-xl font-semibold text-teal-800 print:text-black">
+          <h2
+            class="text-lg md:text-xl font-semibold text-teal-800 print:text-black"
+          >
             Frisium 20mg
           </h2>
-          <p class="text-teal-700 mt-1 print:text-black">
+          <p class="text-teal-700 mt-1 text-sm md:text-base print:text-black">
             <strong>Dosagem:</strong> 2 comprimidos por dia
           </p>
-          <p class="text-lg font-bold text-teal-900 mt-3 print:text-black">
+          <p
+            class="text-base md:text-lg font-bold text-teal-900 mt-2 md:mt-3 print:text-black"
+          >
             Total: 120 comprimidos
           </p>
         </div>
       </div>
 
-      <!-- Progresso (Oculto na Impressão) -->
+      <!-- Progresso -->
       <div id="progressSection" class="mb-6 no-print" style="display: none">
-        <h3 class="text-xl font-semibold text-gray-700 mb-2">
+        <h3 class="text-lg md:text-xl font-semibold text-gray-700 mb-2">
           Progresso do Tratamento
         </h3>
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-sm font-medium text-indigo-700"
+        <div
+          class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2 gap-1"
+        >
+          <span class="text-xs md:text-sm font-medium text-indigo-700"
             >Início: <span id="displayStartDate"></span
           ></span>
-          <span class="text-sm font-medium text-indigo-700"
+          <span class="text-xs md:text-sm font-medium text-indigo-700"
             >Término: <span id="displayEndDate"></span
           ></span>
         </div>
         <div class="progress-container mb-1">
           <div id="progressBar"></div>
         </div>
-        <p class="text-sm text-gray-600 text-right">
+        <p class="text-xs md:text-sm text-gray-600 text-right">
           <span id="progressText" class="font-bold">0</span> / 60 dias
           concluídos
         </p>
       </div>
 
-      <!-- Aviso de 15 dias (Oculto na Impressão) -->
+      <!-- Aviso de 15 dias -->
       <div
         id="warningBox"
-        class="hidden mt-4 p-4 bg-yellow-100 text-yellow-800 border border-yellow-200 rounded-lg shadow-sm no-print"
+        class="hidden mt-4 p-4 bg-yellow-100 text-yellow-800 border border-yellow-200 rounded-lg shadow-sm no-print text-sm md:text-base"
       ></div>
 
-      <!-- Seção de Controle (Oculto na Impressão) -->
+      <!-- Seção de Controle -->
       <div
-        class="bg-gray-50 p-5 rounded-lg border border-gray-200 mt-6 no-print"
+        class="bg-gray-50 p-4 md:p-5 rounded-lg border border-gray-200 mt-6 no-print"
       >
         <div class="mb-4">
           <label
             for="startDate"
-            class="block text-lg font-medium text-gray-700 mb-2"
+            class="block text-base md:text-lg font-medium text-gray-700 mb-2"
             >1. Selecione a data de início:</label
           >
           <input
             type="date"
             id="startDate"
-            class="w-full md:w-auto p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            class="w-full md:w-auto p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm md:text-base"
           />
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
           <button
             id="generateButton"
-            class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow transition-colors"
+            class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg shadow transition-colors text-sm md:text-base"
           >
             Gerar/Atualizar
           </button>
 
-          <!-- Botões de Backup -->
           <button
             id="exportButton"
-            class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-lg shadow transition-colors flex justify-center items-center gap-2"
+            class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-lg shadow transition-colors flex justify-center items-center gap-2 text-sm md:text-base"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -158,7 +173,7 @@
 
           <button
             id="importButton"
-            class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-lg shadow transition-colors flex justify-center items-center gap-2"
+            class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-lg shadow transition-colors flex justify-center items-center gap-2 text-sm md:text-base"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -180,20 +195,19 @@
 
           <button
             id="clearButton"
-            class="bg-red-100 hover:bg-red-200 text-red-700 font-bold py-3 px-4 rounded-lg shadow transition-colors"
+            class="bg-red-100 hover:bg-red-200 text-red-700 font-bold py-3 px-4 rounded-lg shadow transition-colors text-sm md:text-base"
           >
             Limpar Tudo
           </button>
         </div>
 
-        <!-- Input invisível para importação -->
         <input type="file" id="fileInput" accept=".json" class="hidden" />
       </div>
 
       <!-- Mensagem de Erro/Aviso -->
       <div
         id="messageBox"
-        class="hidden mt-4 p-4 bg-red-100 text-red-700 border border-red-200 rounded-lg no-print"
+        class="hidden mt-4 p-4 bg-red-100 text-red-700 border border-red-200 rounded-lg no-print text-sm md:text-base"
       ></div>
 
       <!-- Tabela de Controle -->
@@ -203,7 +217,7 @@
         style="display: none"
       >
         <h3
-          class="text-2xl font-semibold text-gray-800 mb-4 print:text-lg print:mb-2"
+          class="text-xl md:text-2xl font-semibold text-gray-800 mb-4 print:text-lg print:mb-2"
         >
           Cronograma de 60 Dias
         </h3>
@@ -214,27 +228,30 @@
             <thead class="bg-gray-100 sticky top-0 print:static">
               <tr>
                 <th
-                  class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider print:text-black print:border-b"
+                  class="px-2 py-2 md:px-4 md:py-3 text-left text-xs md:text-sm font-semibold text-gray-600 uppercase tracking-wider print:text-black print:border-b"
                 >
                   Dia
                 </th>
                 <th
-                  class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider print:text-black print:border-b"
+                  class="px-2 py-2 md:px-4 md:py-3 text-left text-xs md:text-sm font-semibold text-gray-600 uppercase tracking-wider print:text-black print:border-b"
                 >
                   Data
                 </th>
                 <th
-                  class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider print:text-black print:border-b"
+                  class="px-2 py-2 md:px-4 md:py-3 text-left text-xs md:text-sm font-semibold text-gray-600 uppercase tracking-wider print:text-black print:border-b"
                 >
-                  Carb. (3)
+                  <!-- Texto responsivo: "Carb." no mobile, completo no desktop -->
+                  <span class="md:hidden">Carb. (3)</span>
+                  <span class="hidden md:inline">Carbamazepina (3)</span>
                 </th>
                 <th
-                  class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider print:text-black print:border-b"
+                  class="px-2 py-2 md:px-4 md:py-3 text-left text-xs md:text-sm font-semibold text-gray-600 uppercase tracking-wider print:text-black print:border-b"
                 >
-                  Frisium (2)
+                  <span class="md:hidden">Fris. (2)</span>
+                  <span class="hidden md:inline">Frisium (2)</span>
                 </th>
                 <th
-                  class="px-4 py-3 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider print:text-black print:border-b"
+                  class="px-2 py-2 md:px-4 md:py-3 text-center text-xs md:text-sm font-semibold text-gray-600 uppercase tracking-wider print:text-black print:border-b"
                 >
                   Status
                 </th>
@@ -248,7 +265,6 @@
       </div>
     </div>
 
-    <!-- Arquivo JavaScript Local (deferido) -->
     <script src="app.js" defer></script>
   </body>
 </html>
