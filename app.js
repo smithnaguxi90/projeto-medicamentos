@@ -5,10 +5,10 @@
     startDateInput: document.getElementById("startDate"),
     generateButton: document.getElementById("generateButton"),
     clearButton: document.getElementById("clearButton"),
-    exportButton: document.getElementById("exportButton"), // Novo
-    importButton: document.getElementById("importButton"), // Novo
-    printButton: document.getElementById("printButton"), // Novo
-    fileInput: document.getElementById("fileInput"), // Novo
+    exportButton: document.getElementById("exportButton"),
+    importButton: document.getElementById("importButton"),
+    printButton: document.getElementById("printButton"),
+    fileInput: document.getElementById("fileInput"),
     scheduleTableContainer: document.getElementById("scheduleTableContainer"),
     scheduleBody: document.getElementById("scheduleBody"),
     messageBox: document.getElementById("messageBox"),
@@ -149,7 +149,7 @@
     const downloadAnchorNode = document.createElement("a");
     downloadAnchorNode.setAttribute("href", dataStr);
     downloadAnchorNode.setAttribute("download", "medicacao_backup.json");
-    document.body.appendChild(downloadAnchorNode); // required for firefox
+    document.body.appendChild(downloadAnchorNode);
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
     showMessage("Backup salvo na pasta de downloads!", "success");
@@ -211,12 +211,12 @@
 
     const cellCarb = document.createElement("td");
     cellCarb.className = "px-4 py-3 whitespace-nowrap text-sm text-gray-700";
-    cellCarb.textContent = "3 comprimidos";
+    cellCarb.textContent = "3 comps.";
     row.appendChild(cellCarb);
 
     const cellFris = document.createElement("td");
     cellFris.className = "px-4 py-3 whitespace-nowrap text-sm text-gray-700";
-    cellFris.textContent = "2 comprimidos";
+    cellFris.textContent = "2 comps.";
     row.appendChild(cellFris);
 
     const cellStatus = document.createElement("td");

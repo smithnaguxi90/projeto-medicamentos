@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Fundo Circular Indigo -->
+  <circle cx="32" cy="32" r="32" fill="#4f46e5" />
+  
+  <!-- Ícone da Cápsula (Rotacionado 45 graus) -->
+  <g transform="rotate(45 32 32)">
+    <!-- Corpo da Cápsula -->
+    <rect x="14" y="20" width="36" height="24" rx="12" fill="#ffffff"/>
+    <!-- Linha Divisória da Cápsula -->
+    <line x1="32" y1="20" x2="32" y2="44" stroke="#4f46e5" stroke-width="3" />
+  </g>
+</svg>
