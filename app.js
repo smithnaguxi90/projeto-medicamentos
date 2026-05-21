@@ -7,7 +7,6 @@ import {
   onAuthStateChanged,
 } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 import {
-  getFirestore,
   doc,
   setDoc,
   getDoc,
@@ -39,11 +38,9 @@ const Notifications = {
     const toast = document.createElement("div");
 
     const styles = {
-      success:
-        "bg-emerald-50 border-emerald-200 text-emerald-800 dark:bg-emerald-900/30 dark:border-emerald-800/50 dark:text-emerald-300",
-      error:
-        "bg-red-50 border-red-200 text-red-800 dark:bg-red-900/30 dark:border-red-800/50 dark:text-red-300",
-      info: "bg-blue-50 border-blue-200 text-blue-800 dark:bg-blue-900/30 dark:border-blue-800/50 dark:text-blue-300",
+      success: "bg-emerald-50 border-emerald-200 text-emerald-800",
+      error: "bg-red-50 border-red-200 text-red-800",
+      info: "bg-blue-50 border-blue-200 text-blue-800",
     };
 
     const icons = {
@@ -54,7 +51,7 @@ const Notifications = {
       info: '<svg class="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>',
     };
 
-    toast.className = `flex items-center gap-3 p-4 pr-6 rounded-xl border shadow-lg toast-enter ${styles[type]}`;
+    toast.className = `flex items-center w-full md:w-auto gap-3 p-4 pr-6 rounded-xl border shadow-lg toast-enter pointer-events-auto ${styles[type]}`;
     toast.innerHTML = `${icons[type]} <span class="font-medium text-sm">${message}</span>`;
 
     this.container.appendChild(toast);
@@ -83,35 +80,6 @@ const Utils = {
   parseDateString: (dateStr) => {
     const parts = dateStr.split("-");
     return new Date(parts[0], parts[1] - 1, parts[2]);
-  },
-};
-
-// --- GERENCIADOR DE TEMA (DARK MODE) ---
-const ThemeManager = {
-  init() {
-    this.btn = document.getElementById("themeToggleBtn");
-    if (!this.btn) return;
-
-    // Recupera a preferência salva. Modo Claro é o padrão (primário).
-    const storedTheme = localStorage.getItem("theme");
-
-    if (storedTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    }
-
-    this.updateIcon();
-    this.btn.addEventListener("click", () => {
-      document.documentElement.classList.toggle("dark");
-      const isDark = document.documentElement.classList.contains("dark");
-      localStorage.setItem("theme", isDark ? "dark" : "light");
-      this.updateIcon();
-    });
-  },
-  updateIcon() {
-    const isDark = document.documentElement.classList.contains("dark");
-    this.btn.innerHTML = isDark
-      ? `<svg class="w-5 h-5 text-amber-400 animate-theme-toggle" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" /></svg>`
-      : `<svg class="w-5 h-5 text-slate-600 animate-theme-toggle" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>`;
   },
 };
 
@@ -254,28 +222,28 @@ const UI = {
 
   renderRow(dayNumber, date, dateKey, isChecked) {
     const row = document.createElement("tr");
-    row.className = `transition-colors table-row-hover select-none border-b border-slate-100 dark:border-slate-700/50 ${isChecked ? "completed dark:opacity-50" : ""}`;
+    row.className = `transition-colors select-none border-b border-slate-100 ${isChecked ? "completed" : ""}`;
 
     const cellClass =
-      "px-2 md:px-4 py-3 text-[11px] md:text-sm whitespace-nowrap";
+      "px-1 md:px-4 py-3 text-[11px] md:text-sm whitespace-nowrap";
 
     const weekDays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-    const dateStr = `<span class="text-slate-400 dark:text-slate-500 mr-1 text-[10px] md:text-xs w-5 md:w-6 inline-block">${weekDays[date.getDay()]}</span> <span class="font-medium dark:text-slate-200">${Utils.formatDateBR(date)}</span>`;
+    const dateStr = `<span class="text-slate-400 mr-1 text-[10px] md:text-xs w-5 md:w-6 inline-block">${weekDays[date.getDay()]}</span> <span class="font-medium">${Utils.formatDateBR(date)}</span>`;
 
     const checkIcon = `<div class="bg-emerald-100 p-1 rounded-full inline-flex shadow-sm"><svg class="w-4 h-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg></div>`;
-    const pendingIcon = `<div class="bg-slate-100 dark:bg-slate-700 p-1 rounded-full inline-flex border border-slate-200 dark:border-slate-600"><svg class="w-4 h-4 text-slate-300 dark:text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>`;
+    const pendingIcon = `<div class="bg-slate-100 p-1 rounded-full inline-flex border border-slate-200"><svg class="w-4 h-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>`;
 
     // Destaca visualmente a linha do dia de hoje
     const todayKey = Utils.dateToKey(new Date());
     if (dateKey === todayKey) {
-      row.classList.add("bg-blue-50/30", "dark:bg-blue-900/20");
+      row.classList.add("bg-blue-50/30");
     }
 
     row.innerHTML = `
-      <td class="${cellClass} font-bold text-slate-400 dark:text-slate-500">#${String(dayNumber).padStart(2, "0")}</td>
+      <td class="${cellClass} font-bold text-slate-400 text-center">#${String(dayNumber).padStart(2, "0")}</td>
       <td class="${cellClass}">${dateStr} ${dateKey === todayKey ? '<span class="ml-1 md:ml-2 bg-brand-100 text-brand-700 text-[9px] md:text-[10px] px-1.5 md:px-2 py-0.5 rounded-full font-bold uppercase">Hoje</span>' : ""}</td>
-      <td class="${cellClass} font-bold text-brand-600"><span class="md:hidden">3 cp.</span><span class="hidden md:inline">3 comps.</span></td>
-      <td class="${cellClass} font-bold text-emerald-600"><span class="md:hidden">2 cp.</span><span class="hidden md:inline">2 comps.</span></td>
+      <td class="${cellClass} font-bold text-brand-600 text-center"><span class="md:hidden text-[13px]">3</span><span class="hidden md:inline">3 comps.</span></td>
+      <td class="${cellClass} font-bold text-emerald-600 text-center"><span class="md:hidden text-[13px]">2</span><span class="hidden md:inline">2 comps.</span></td>
       <td class="${cellClass} text-center">${isChecked ? checkIcon : pendingIcon}</td>
     `;
     return row;
@@ -305,11 +273,6 @@ const UI = {
       const isChecked = planData.days[dateKey] || false;
       const row = this.renderRow(i + 1, currentDate, dateKey, isChecked);
 
-      // Permite clicar na linha para alternar o status
-      row.addEventListener("click", () => {
-        AppController.handleToggleDay(dateKey, !isChecked);
-      });
-
       this.elements.tableBody.appendChild(row);
     }
 
@@ -327,13 +290,13 @@ const UI = {
       if (planData.days[todayKey] === true) {
         // Já tomou
         this.elements.markTodayBtn.className =
-          "w-full bg-health-50 border border-health-200 text-health-700 font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 text-lg cursor-default transition-all";
+          "w-full bg-health-50 border border-health-200 text-health-700 font-bold py-3.5 md:py-4 px-4 md:px-6 rounded-2xl flex flex-wrap items-center justify-center gap-2 md:gap-3 text-base md:text-lg cursor-default transition-all";
         this.elements.markTodayBtn.innerHTML = `<svg class="w-6 h-6 text-health-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Dose de Hoje Registrada`;
         this.elements.markTodayBtn.disabled = true;
       } else {
         // Falta tomar
         this.elements.markTodayBtn.className =
-          "w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-emerald-200 transition-all flex items-center justify-center gap-3 text-lg cursor-pointer transform hover:scale-[1.01]";
+          "w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3.5 md:py-4 px-4 md:px-6 rounded-2xl shadow-lg shadow-emerald-200 transition-all flex flex-wrap items-center justify-center gap-2 md:gap-3 text-base md:text-lg cursor-pointer transform hover:scale-[1.01]";
         this.elements.markTodayBtn.innerHTML = `<svg class="w-6 h-6 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg> Registrar Dose de Hoje`;
         this.elements.markTodayBtn.disabled = false;
       }
@@ -363,14 +326,14 @@ const UI = {
 
     if (completedDays === CONSTANTS.TOTAL_DAYS) {
       warningBox.className =
-        "mb-6 p-4 rounded-xl border flex gap-3 items-start transition-all bg-emerald-50 border-emerald-200 text-emerald-800 dark:bg-emerald-900/30 dark:border-emerald-800/50 dark:text-emerald-300 no-print fade-in";
+        "mb-6 p-4 rounded-xl border flex gap-3 items-start transition-all bg-emerald-50 border-emerald-200 text-emerald-800 no-print fade-in";
       warningIcon.innerHTML = `<svg class="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`;
       warningTitle.textContent = "Tratamento Concluído!";
       warningMessage.textContent =
         "Parabéns por completar os 60 dias do plano de medicação.";
     } else if (daysRemaining <= CONSTANTS.WARNING_DAYS) {
       warningBox.className =
-        "mb-6 p-4 rounded-xl border flex gap-3 items-start transition-all bg-amber-50 border-amber-200 text-amber-800 dark:bg-amber-900/30 dark:border-amber-800/50 dark:text-amber-300 no-print fade-in";
+        "mb-6 p-4 rounded-xl border flex gap-3 items-start transition-all bg-amber-50 border-amber-200 text-amber-800 no-print fade-in";
       warningIcon.innerHTML = `<svg class="w-6 h-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>`;
       warningTitle.textContent = "Atenção: Reta Final";
       warningMessage.textContent = `Faltam apenas ${daysRemaining} dias. Por favor, verifique a necessidade de renovar sua receita médica.`;
@@ -522,13 +485,14 @@ const FirebaseAPI = {
 // --- LÓGICA PRINCIPAL ---
 const AppController = {
   init() {
-    ThemeManager.init();
     this.bindEvents();
     FirebaseAPI.init();
   },
 
   bindEvents() {
-    UI.elements.loginForm.addEventListener("submit", (e) => this.handleLogin(e));
+    UI.elements.loginForm.addEventListener("submit", (e) =>
+      this.handleLogin(e),
+    );
     UI.elements.logoutBtn.addEventListener("click", () => this.handleLogout());
     UI.elements.generateBtn.addEventListener("click", () =>
       this.handleGenerate(),
@@ -561,13 +525,16 @@ const AppController = {
       // Tenta logar
       await signInWithEmailAndPassword(FirebaseAPI.auth, email, pass);
       Notifications.show("Bem-vindo de volta!", "success");
-    } catch (err) {
+    } catch {
       // Se der erro porque a conta não existe, cria a conta na mesma hora
       try {
         await createUserWithEmailAndPassword(FirebaseAPI.auth, email, pass);
         Notifications.show("Sua nova conta foi criada!", "success");
-      } catch (err2) {
-        Notifications.show("Erro: Verifique e-mail ou se a senha tem 6 caracteres.", "error");
+      } catch {
+        Notifications.show(
+          "Erro: Verifique e-mail ou se a senha tem 6 caracteres.",
+          "error",
+        );
       }
     } finally {
       btn.disabled = false;
@@ -592,34 +559,10 @@ const AppController = {
     try {
       await FirebaseAPI.savePlan(dateVal);
       Notifications.show("Plano sincronizado com sucesso!", "success");
-    } catch (err) {
+    } catch {
       Notifications.show("Erro ao salvar na nuvem.", "error");
     } finally {
       UI.setLoading(UI.elements.generateBtn, false, originalContent);
-    }
-  },
-
-  async handleToggleDay(dateKey, newStatus) {
-    // Proteção do Modo Automático Total
-    const todayKey = Utils.dateToKey(new Date());
-    if (dateKey <= todayKey && !newStatus) {
-      Notifications.show(
-        "Modo Automático: Dias anteriores são marcados sozinhos.",
-        "info",
-      );
-      return;
-    }
-
-    try {
-      await FirebaseAPI.toggleDayStatus(dateKey, newStatus);
-      if (newStatus) {
-        Notifications.show("Dose registrada com sucesso!", "success");
-      } else {
-        Notifications.show("Registro de dose cancelado.", "info");
-      }
-    } catch (err) {
-      console.error(err);
-      Notifications.show("Falha ao atualizar o status.", "error");
     }
   },
 
@@ -657,7 +600,7 @@ const AppController = {
       try {
         await FirebaseAPI.clearPlan();
         Notifications.show("Todos os dados foram apagados.", "info");
-      } catch (err) {
+      } catch {
         Notifications.show("Erro ao apagar dados.", "error");
       }
     });
@@ -680,7 +623,7 @@ const AppController = {
       a.click();
       URL.revokeObjectURL(url);
       Notifications.show("Backup baixado com sucesso!", "success");
-    } catch (err) {
+    } catch {
       Notifications.show("Erro ao exportar backup.", "error");
     }
   },
@@ -699,7 +642,7 @@ const AppController = {
         } else {
           throw new Error("Formato inválido");
         }
-      } catch (err) {
+      } catch {
         Notifications.show("Arquivo inválido ou corrompido.", "error");
       }
     };

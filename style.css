@@ -56,20 +56,6 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   animation: fadeOut 0.4s ease-out forwards;
 }
 
-@keyframes themeToggle {
-  0% {
-    transform: scale(0.5) rotate(-90deg);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1) rotate(0);
-    opacity: 1;
-  }
-}
-.animate-theme-toggle {
-  animation: themeToggle 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
 .fade-in {
   animation: slideInRight 0.3s ease-out forwards;
 }
@@ -81,40 +67,6 @@ tr.completed {
 tr.completed td {
   color: #94a3b8;
   text-decoration: line-through;
-}
-.table-row-hover {
-  cursor: pointer;
-}
-.table-row-hover:hover {
-  background-color: #f1f5f9;
-  transition: background-color 0.2s ease;
-}
-tr.completed.table-row-hover:hover {
-  background-color: #f1f5f9;
-}
-
-/* --- AJUSTES PARA O DARK MODE --- */
-.dark body {
-  background-color: #0f172a; /* slate-900 */
-}
-.dark tr.completed {
-  background-color: #1e293b; /* slate-800 */
-}
-.dark tr.completed td {
-  color: #64748b; /* slate-500 */
-}
-.dark .table-row-hover:hover,
-.dark tr.completed.table-row-hover:hover {
-  background-color: #334155; /* slate-700 */
-}
-.dark ::-webkit-scrollbar-track {
-  background: #1e293b;
-}
-.dark ::-webkit-scrollbar-thumb {
-  background: #475569;
-}
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
 }
 
 /* ESTILOS DE IMPRESSÃO */

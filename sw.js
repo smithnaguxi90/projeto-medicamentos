@@ -1,4 +1,4 @@
-const CACHE_NAME = "medicacao-pwa-v2";
+const CACHE_NAME = "medicacao-pwa-v3";
 const ASSETS = [
   "./",
   "./index.html",
@@ -44,7 +44,11 @@ self.addEventListener("fetch", (event) => {
     fetch(event.request)
       .then((fetchResponse) => {
         return caches.open(CACHE_NAME).then((cache) => {
-          if (event.request.url.startsWith("http")) {
+          if (
+            event.request.method === "GET" &&
+            event.request.url.startsWith("http") &&
+            fetchResponse.status === 200
+          ) {
             cache.put(event.request, fetchResponse.clone());
           }
           return fetchResponse;
